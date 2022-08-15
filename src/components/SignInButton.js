@@ -1,5 +1,9 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+function SignInButton() {
+  return <SignInButtonContainer>SignIn</SignInButtonContainer>;
+}
+export default SignInButton;
 
 const SignInButtonContainer = styled.button`
   display: block;
@@ -12,12 +16,3 @@ const SignInButtonContainer = styled.button`
   background-color: #00bc77;
   color: #fff;
 `;
-
-function SignInButton() {
-  return (
-    <SignInButtonContainer>
-      <Link to={"/user"}>SignIn</Link>
-    </SignInButtonContainer>
-  );
-}
-export default SignInButton;

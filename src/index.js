@@ -1,17 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter as Router } from "react-router-dom";
-import GlobalCSS from "./GlobalStyle";
+
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import GlobalCSS from "./GlobalStyle";
+
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+
+import authReducer from "./slices/authSlice";
+import infoReducer from "./slices/infoSlice";
+
+const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    info: infoReducer,
+  },
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Router>
+    <Provider store={store}>
       <GlobalCSS />
       <App />
-    </Router>
+    </Provider>
   </React.StrictMode>
 );
-reportWebVitals();

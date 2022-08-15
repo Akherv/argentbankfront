@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+function FeaturesItem(props) {
+  return (
+    <FeatureItemContainer>
+      <FeatureIcon src={props.type} alt={props.altText} />
+      <FeatureItemTitle>{props.title}</FeatureItemTitle>
+      <p>{props.children}</p>
+    </FeatureItemContainer>
+  );
+}
+export default FeaturesItem;
+
 const FeatureItemContainer = styled.div`
   flex: 1;
   padding: 2.5rem;
@@ -18,14 +29,3 @@ const FeatureItemTitle = styled.h3`
   font-weight: bold;
   margin-bottom: 0.5rem;
 `;
-
-function FeaturesItem(props) {
-  return (
-    <FeatureItemContainer>
-      <FeatureIcon src={props.type} alt={props.altText} />
-      <FeatureItemTitle>{props.title}</FeatureItemTitle>
-      <p>{props.children}</p>
-    </FeatureItemContainer>
-  );
-}
-export default FeaturesItem;

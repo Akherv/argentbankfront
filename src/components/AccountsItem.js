@@ -1,21 +1,38 @@
 import styled from "styled-components";
 
-const AccountItemContainer = styled.section`
-display: flex;
-justify-content: space-between;
-align-items: center;
-border: 1px solid black;
-background-color: #fff;
-width: 80%;
-margin: 0 auto;
-flex-direction: column;
-padding: 1.5rem;
-box-sizing: border-box;
-text-align: left;
-margin-bottom: 2rem;
-  }
+function AccountItem({ title, amount, description }) {
+  return (
+    <AccountItemContainer>
+      <AccountContentWrapper>
+        <AccountTitle>{title}</AccountTitle>
+        <AccountAmount>{amount}</AccountAmount>
+        <AccountAmountDescription>
+          {description} Balance
+        </AccountAmountDescription>
+      </AccountContentWrapper>
+      <AccountContentWrapperCta>
+        <TransactionButton>View transactions</TransactionButton>
+      </AccountContentWrapperCta>
+    </AccountItemContainer>
+  );
+}
+export default AccountItem;
 
-@media (min-width: 720px) {
+const AccountItemContainer = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  @media (min-width: 720px) {
     flex-direction: row;
   }
 `;
@@ -59,21 +76,3 @@ const TransactionButton = styled.button`
     width: 200px;
   }
 `;
-
-function AccountItem({ title, amount, description }) {
-  return (
-    <AccountItemContainer>
-      <AccountContentWrapper>
-        <AccountTitle>{title}</AccountTitle>
-        <AccountAmount>{amount}</AccountAmount>
-        <AccountAmountDescription>
-          {description} Balance
-        </AccountAmountDescription>
-      </AccountContentWrapper>
-      <AccountContentWrapperCta>
-        <TransactionButton>View transactions</TransactionButton>
-      </AccountContentWrapperCta>
-    </AccountItemContainer>
-  );
-}
-export default AccountItem;

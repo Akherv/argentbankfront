@@ -4,15 +4,6 @@ import iconChat from "../assets/icon-chat.png";
 import iconMoney from "../assets/icon-money.png";
 import iconSecurity from "../assets/icon-security.png";
 
-const FeatureContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-
-  @media (min-width: 920px) {
-    flex-direction: row;
-  }
-`;
-
 function Features() {
   return (
     <FeatureContainer>
@@ -44,3 +35,12 @@ function Features() {
   );
 }
 export default Features;
+
+const FeatureContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 920px) {
+    flex-direction: row;
+  }
+`;

@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+function Footer() {
+  return (
+    <FooterContainer>
+      <FooterText>Copyright 2020 Argent Bank</FooterText>
+    </FooterContainer>
+  );
+}
+export default Footer;
+
 const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
@@ -11,12 +20,3 @@ const FooterText = styled.p`
   margin: 0;
   padding: 0;
 `;
-
-function Footer() {
-  return (
-    <FooterContainer>
-      <FooterText>Copyright 2020 Argent Bank</FooterText>
-    </FooterContainer>
-  );
-}
-export default Footer;

@@ -1,6 +1,21 @@
 import styled from "styled-components";
 import background from "../assets/bank-tree.jpeg";
 
+function Hero() {
+  return (
+    <HeroContainer>
+      <HeroContent>
+        <h2 className="sr-only">Promoted Content</h2>
+        <HeroSubtitle>No fees.</HeroSubtitle>
+        <HeroSubtitle>No minimum deposit.</HeroSubtitle>
+        <HeroSubtitle>High interest rates.</HeroSubtitle>
+        <HeroText>Open a savings account with Argent Bank today!</HeroText>
+      </HeroContent>
+    </HeroContainer>
+  );
+}
+export default Hero;
+
 const HeroContainer = styled.div`
   background-image: url(${background});
   background-position: 0 -50px;
@@ -48,22 +63,6 @@ const HeroText = styled.p`
   font-size: 0.9rem;
 
   @media (min-width: 920px) {
-      font-size: 1.2rem;
-    }
+    font-size: 1.2rem;
   }
 `;
-
-function Hero() {
-  return (
-    <HeroContainer>
-      <HeroContent>
-        <h2 className="sr-only">Promoted Content</h2>
-        <HeroSubtitle>No fees.</HeroSubtitle>
-        <HeroSubtitle>No minimum deposit.</HeroSubtitle>
-        <HeroSubtitle>High interest rates.</HeroSubtitle>
-        <HeroText>Open a savings account with Argent Bank today!</HeroText>
-      </HeroContent>
-    </HeroContainer>
-  );
-}
-export default Hero;
