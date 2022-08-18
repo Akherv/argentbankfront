@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import User from "./pages/User";
+import PrivateRoute from "./components/PrivateRoute";
 import Error from "./pages/Error";
 import { loadUser } from "./slices/authSlice";
 
@@ -28,8 +29,15 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <User />
+              </PrivateRoute>
+            }
+          />
           <Route path="notFound" element={<Error />} />
           <Route path="*" element={<Navigate to="/notFound" replace />} />
         </Routes>

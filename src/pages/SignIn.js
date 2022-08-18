@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../slices/authSlice";
+import { rememberUser } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SignInButton from "../components/SignInButton";
@@ -15,23 +16,26 @@ function SignIn() {
     password: "",
   });
 
+  const [keepUser, setKeepUser] = useState(false);
+  console.log(keepUser);
   useEffect(() => {
     if (auth.id) {
-      navigate("/user");
+      navigate("/profile");
     }
   }, [auth.id, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+    //console.log(user);
     dispatch(loginUser(user));
+    dispatch(rememberUser(keepUser));
   };
 
   return (
     <main className="main bg-dark">
       <SignInContent>
         <i className="fa fa-user-circle sign-in-icon"></i>
-        <h1>Sign In</h1>
+        <h1>SignIn</h1>
         <form onSubmit={handleSubmit}>
           <InputWrapper>
             <label htmlFor="username">Username</label>
@@ -50,14 +54,14 @@ function SignIn() {
             />
           </InputWrapper>
           <InputRemember>
-            <input type="checkbox" id="remember-me" />
+            <input
+              type="checkbox"
+              id="remember-me"
+              onChange={(e) => setKeepUser(!keepUser)}
+            />
             <label htmlFor="remember-me">Remember me</label>
           </InputRemember>
-          <SignInButton />
-          {/* {auth.rigisterStatus === "pending" ? "Submitting..." : "Register"}
-          {auth.registerStatus === "rejected" ? (
-            <p>{auth.registerError}</p>
-          ) : null} */}
+          <SignInButton type="submit" />
         </form>
       </SignInContent>
     </main>

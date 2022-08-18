@@ -4,21 +4,28 @@ import jwtDecode from "jwt-decode";
 
 const initialState = {
   id: "",
-  token: sessionStorage.getItem("token"),
+  token: sessionStorage.getItem("token") || localStorage.getItem("token"),
   loginStatus: "",
   loginError: "",
   userLoaded: false,
+  rememberUser: false,
 };
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (userData, { rejectWithValue }) => {
+  async (userData, { rejectWithValue, getState }) => {
     try {
       const res = await axios.post("http://localhost:3001/api/v1/user/login", {
         email: userData.email,
         password: userData.password,
       });
-      sessionStorage.setItem("token", res.data.body.token);
+      const state = getState();
+      if (state.auth.rememberUser === false) {
+        sessionStorage.setItem("token", res.data.body.token);
+      } else {
+        localStorage.setItem("token", res.data.body.token);
+      }
+
       return res.data.body.token;
     } catch (err) {
       console.log(err.response.data.message);
@@ -46,7 +53,6 @@ export const authSlice = createSlice({
     logoutUser(state) {
       sessionStorage.clear();
       localStorage.clear();
-
       return {
         ...state,
         id: "",
@@ -55,6 +61,13 @@ export const authSlice = createSlice({
         token: "",
         loginStatus: "",
         loginError: "",
+        rememberUser: false,
+      };
+    },
+    rememberUser(state, action) {
+      return {
+        ...state,
+        rememberUser: action.payload,
       };
     },
   },
@@ -83,6 +96,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { loadUser, logoutUser } = authSlice.actions;
+export const { loadUser, logoutUser, rememberUser } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -31,7 +31,7 @@ function NavBar() {
             Sign Out
           </NavItemLink>
         ) : (
-          <NavItemLink to="./signin">
+          <NavItemLink to="./login">
             <i className="fa fa-user-circle"></i> Sign In
           </NavItemLink>
         )}

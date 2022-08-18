@@ -7,39 +7,57 @@ const initialState = {
   lastName: "",
   getInfoStatus: "",
   getInfoError: "",
+  getupdateStatus: "",
+  getUpdateError: "",
 };
 
 export const getInfoUser = createAsyncThunk(
   "info/getInfoUser",
   async ({ rejectWithValue }) => {
     try {
-      const token = sessionStorage.getItem("token");
-      // console.log(token);
-      // const res = await axios.post(
-      //   "http://localhost:3001/api/v1/user/profile",
-      //   {
-      //     headers: {
-      //       Accept: "*/*",
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-
-      // );
-
+      const token =
+        sessionStorage.getItem("token") || localStorage.getItem("token");
       let headersList = {
         Accept: "*/*",
         Authorization: `Bearer ${token}`,
       };
-
       let reqOptions = {
         url: "http://localhost:3001/api/v1/user/profile",
         method: "POST",
         headers: headersList,
       };
-
       let res = await axios.request(reqOptions);
-      console.log(res.data.body);
+      //console.log(res.data.body);
+      localStorage.setItem("data", JSON.stringify(res.data.body));
+      return res.data.body;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
+export const updateInfoUser = createAsyncThunk(
+  "info/updateInfoUser",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const token =
+        sessionStorage.getItem("token") || localStorage.getItem("token");
+      let headersList = {
+        Accept: "*/*",
+        Authorization: `Bearer ${token}`,
+      };
+      let reqOptions = {
+        url: "http://localhost:3001/api/v1/user/profile",
+        method: "PUT",
+        headers: headersList,
+        data: {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+        },
+      };
+      let res = await axios.request(reqOptions);
+      //console.log(res.data.body);
       localStorage.setItem("data", JSON.stringify(res.data.body));
       return res.data.body;
     } catch (err) {
@@ -73,6 +91,29 @@ export const infoSlice = createSlice({
         ...state,
         getInfoStatus: "rejected",
         getInfoError: action.payload,
+      };
+    });
+
+    builder.addCase(updateInfoUser.pending, (state) => {
+      return { ...state, getUpdateStatus: "pending" };
+    });
+    builder.addCase(updateInfoUser.fulfilled, (state, action) => {
+      if (action.payload) {
+        const user = action.payload;
+        return {
+          ...state,
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          getUpdateStatus: "Fulfilled",
+        };
+      } else return state;
+    });
+    builder.addCase(updateInfoUser.rejected, (state, action) => {
+      return {
+        ...state,
+        getUpdateStatus: "rejected",
+        getUpdateError: action.payload,
       };
     });
   },
