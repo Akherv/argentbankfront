@@ -17,7 +17,7 @@ function SignIn() {
   });
 
   const [keepUser, setKeepUser] = useState(false);
-  console.log(keepUser);
+
   useEffect(() => {
     if (auth.id) {
       navigate("/profile");
@@ -26,7 +26,6 @@ function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(user);
     dispatch(loginUser(user));
     dispatch(rememberUser(keepUser));
   };

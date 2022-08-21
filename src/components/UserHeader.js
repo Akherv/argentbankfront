@@ -16,7 +16,6 @@ function UserHeader() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
     e.target.reset();
     setEditStatus(!editStatus);
     dispatch(updateInfoUser(user));
@@ -84,14 +83,13 @@ const FormStyled = styled.form`
   flex-direction: column;
 
   & div {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1em;
-    justify-items: center;
+    display: flex;
+    justify-content: center;
   }
   & input {
     width: 200px;
     height: 2rem;
+    margin: 10px;
   }
 `;
 
@@ -103,7 +101,7 @@ const SaveButton = styled.button`
   border-color: #00bc77;
   background-color: #00bc77;
   color: #fff;
-  margin: 0 auto;
+  margin: 10px;
 `;
 
 const CancelButton = styled.button`
@@ -114,5 +112,5 @@ const CancelButton = styled.button`
   border-color: #00bc77;
   background-color: #00bc77;
   color: #fff;
-  margin: 0 auto;
+  margin: 10px;
 `;
