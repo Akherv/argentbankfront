@@ -31,4 +31,4 @@ yarn install
 
 yarn start
 
-Your server should now be running at http://locahost:3000
+Your server should now be running at http://localhost:3000

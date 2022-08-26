@@ -30,10 +30,14 @@ function NavBar() {
       <div>
         {auth.id ? (
           <NavItemLink to="/" onClick={() => dispatch(logoutUser(null))}>
-            <i className="fa fa-user-circle"></i>
-            {info.firstName}&nbsp;
-            <i className="fa fa-sign-out"></i>
-            Sign Out
+            <span>
+              <i className="fa fa-user-circle"></i>
+              {info.firstName}&nbsp;
+            </span>
+            <span>
+              <i className="fa fa-sign-out"></i>
+              Sign Out
+            </span>
           </NavItemLink>
         ) : (
           <NavItemLink to="./login">
@@ -57,9 +61,9 @@ const StyledLink = styled(Link)`
   font-weight: bold;
   color: #2c3e50;
 
-  //   &.router-link-exact-active {
-  //     color: #42b983;
-  //   }
+  /* & .router-link-exact-active {
+    color: #42b983;
+  } */
 `;
 
 const NavLogoLink = styled(StyledLink)`
@@ -70,6 +74,18 @@ const NavLogoLink = styled(StyledLink)`
 const NavItemLink = styled(StyledLink)`
   text-decoration: none;
   margin-right: 0.5rem;
+  @media screen and (max-width: 400px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  & span {
+    @media screen and (max-width: 400px) {
+      display: block;
+      min-width: 100px;
+    }
+  }
 
   &:hover {
     text-decoration: underline;
