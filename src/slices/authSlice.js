@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+//Initialize the state model
 const initialState = {
   id: "",
   token: sessionStorage.getItem("token") || localStorage.getItem("token"),
@@ -11,6 +12,7 @@ const initialState = {
   rememberUser: false,
 };
 
+//LoginUser use CreateAsyncThunk function to handle the API fetching on "user/login" endpoint.
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue, getState }) => {
@@ -20,24 +22,25 @@ export const loginUser = createAsyncThunk(
         password: userData.password,
       });
       const state = getState();
+      //handle the data persistance based on the rememberUser property, if true the token is kept on localstorage else by default on session storage.
       if (state.auth.rememberUser === false) {
         sessionStorage.setItem("token", res.data.body.token);
       } else {
         localStorage.setItem("token", res.data.body.token);
       }
-
       return res.data.body.token;
     } catch (err) {
-      console.log(err.response.data.message);
       return rejectWithValue(err.response.data);
     }
   }
 );
 
+//Define the auth reducer/extraReducers & actions with createSlice function
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    //if token, decode token & return user data
     loadUser(state) {
       const token = state.token;
       if (token) {
@@ -50,6 +53,7 @@ export const authSlice = createSlice({
         };
       } else return { ...state, userLoaded: false };
     },
+    //Reset all the data storage & the initial state
     logoutUser(state) {
       sessionStorage.clear();
       localStorage.clear();
@@ -64,6 +68,7 @@ export const authSlice = createSlice({
         rememberUser: false,
       };
     },
+    //Add rememberUser on the current state
     rememberUser(state, action) {
       return {
         ...state,
@@ -96,6 +101,7 @@ export const authSlice = createSlice({
   },
 });
 
+//Destructure & export the actions creators
 export const { loadUser, logoutUser, rememberUser } = authSlice.actions;
 
 export default authSlice.reducer;

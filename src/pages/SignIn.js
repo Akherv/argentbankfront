@@ -7,15 +7,20 @@ import styled from "styled-components";
 import SignInButton from "../components/SignInButton";
 
 function SignIn() {
-  const navigate = useNavigate();
+  //Initialize the useDispatch hook for updating the store(auth state)
+  //Initialize the useNavigate hook to handle the profile route based on auth.Id
+  //Initialize the useSelector hook for getting the data from the store(auth state)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
 
+  // Manage the local state sign-in form
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
+  // Manage the local state for persisting the data
   const [keepUser, setKeepUser] = useState(false);
 
   useEffect(() => {
@@ -24,6 +29,7 @@ function SignIn() {
     }
   }, [auth.id, navigate]);
 
+  //Handle the form submission & dispatch the loginUser & rememberUser actions
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(user));
@@ -61,6 +67,14 @@ function SignIn() {
             <label htmlFor="remember-me">Remember me</label>
           </InputRemember>
           <SignInButton type="submit" />
+          {auth.loginError?.status === 400 ? (
+            <ErrorBox>Invalid email or password</ErrorBox>
+          ) : auth.loginError?.status === 500 ||
+            auth.loginError === undefined ? (
+            <ErrorBox>500 - API fetching error, please retry later</ErrorBox>
+          ) : (
+            ""
+          )}
         </form>
       </SignInContent>
     </main>
@@ -102,4 +116,8 @@ const InputRemember = styled.div`
     padding: 5px;
     font-size: 1.2rem;
   }
+`;
+
+const ErrorBox = styled.p`
+  color: tomato;
 `;

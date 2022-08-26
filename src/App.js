@@ -16,12 +16,14 @@ import Error from "./pages/Error";
 import { loadUser } from "./slices/authSlice";
 
 export default function App() {
+  //Initialize the dispatch method for updating the store(auth state)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
 
+  // Router logic
   return (
     <>
       <Router>

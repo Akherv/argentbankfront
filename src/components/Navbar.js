@@ -7,15 +7,20 @@ import { logoutUser } from "../slices/authSlice";
 import { getInfoUser } from "../slices/infoSlice";
 
 function NavBar() {
+  //Initialize the useDispatch hook for updating the store(auth & info state)
+  //Initialize the useSelector hook for getting the data from the store(auth & info state)
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const info = useSelector((state) => state.info);
-  // console.log(auth, info);
+
+  // Dispatch the getinfoUser action based on the state of auth.token
   useEffect(() => {
     if (auth.token) {
       dispatch(getInfoUser(auth.token));
     }
   }, [auth.token, dispatch]);
+
+  // Navbar component with conditionnal rendering for login/logout based on the state of auth.id
   return (
     <Nav>
       <NavLogoLink to="./">

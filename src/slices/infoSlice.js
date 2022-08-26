@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//Initialize the state model
 const initialState = {
   id: "",
   firstName: "",
@@ -11,6 +12,7 @@ const initialState = {
   getUpdateError: "",
 };
 
+//GetInfoUser use CreateAsyncThunk function to handle the API fetching on "user/profile" endpoint.
 export const getInfoUser = createAsyncThunk(
   "info/getInfoUser",
   async ({ rejectWithValue }) => {
@@ -27,16 +29,15 @@ export const getInfoUser = createAsyncThunk(
         headers: headersList,
       };
       let res = await axios.request(reqOptions);
-      //console.log(res.data.body);
       localStorage.setItem("data", JSON.stringify(res.data.body));
       return res.data.body;
     } catch (err) {
-      console.log(err);
       return rejectWithValue(err.response.data);
     }
   }
 );
 
+//UpdateInfoUser use CreateAsyncThunk function to handle the API fetching on "user/profile" endpoint.
 export const updateInfoUser = createAsyncThunk(
   "info/updateInfoUser",
   async (userData, { rejectWithValue }) => {
@@ -57,16 +58,15 @@ export const updateInfoUser = createAsyncThunk(
         },
       };
       let res = await axios.request(reqOptions);
-      //console.log(res.data.body);
       localStorage.setItem("data", JSON.stringify(res.data.body));
       return res.data.body;
     } catch (err) {
-      console.log(err);
       return rejectWithValue(err.response.data);
     }
   }
 );
 
+//Define the info reducer/extraReducers & actions with createSlice function
 export const infoSlice = createSlice({
   name: "info",
   initialState,
@@ -93,7 +93,6 @@ export const infoSlice = createSlice({
         getInfoError: action.payload,
       };
     });
-
     builder.addCase(updateInfoUser.pending, (state) => {
       return { ...state, getUpdateStatus: "pending" };
     });

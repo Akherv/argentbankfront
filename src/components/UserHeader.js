@@ -4,16 +4,21 @@ import styled from "styled-components";
 import { updateInfoUser } from "../slices/infoSlice";
 
 function UserHeader() {
+  //Initialize the useDispatch hook for updating the store(info state)
+  //Initialize the useSelector hook for getting the data from the store(info state)
   const dispatch = useDispatch();
   const info = useSelector((state) => state.info);
 
+  // Manage the local state for the user datas
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
   });
 
+  // Manage the local state for toggling the form
   const [editStatus, setEditStatus] = useState(false);
 
+  //Handle the form submission & close the form & dispatch the updateInfoUser action
   const handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
@@ -27,7 +32,6 @@ function UserHeader() {
         <br />
         {info.firstName} {info.lastName}!
       </h1>
-
       {editStatus ? (
         <FormStyled onSubmit={handleSubmit}>
           <div>
@@ -85,11 +89,20 @@ const FormStyled = styled.form`
   & div {
     display: flex;
     justify-content: center;
+
+    @media screen and (max-width: 400px) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
   & input {
     width: 200px;
     height: 2rem;
     margin: 10px;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 100%;
   }
 `;
 
