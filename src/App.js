@@ -13,7 +13,7 @@ import SignIn from "./pages/SignIn";
 import User from "./pages/User";
 import PrivateRoute from "./components/PrivateRoute";
 import Error from "./pages/Error";
-import { loadUser } from "./slices/authSlice";
+import { loadUser, rememberUser } from "./slices/authSlice";
 
 export default function App() {
   //Initialize the dispatch method for updating the store(auth state)
@@ -21,6 +21,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(rememberUser());
   }, [dispatch]);
 
   // Router logic

@@ -60,20 +60,27 @@ export const authSlice = createSlice({
       return {
         ...state,
         id: "",
-        email: "",
-        password: "",
         token: "",
         loginStatus: "",
         loginError: "",
+        userLoaded: false,
         rememberUser: false,
       };
     },
     //Add rememberUser on the current state
     rememberUser(state, action) {
-      return {
-        ...state,
-        rememberUser: action.payload,
-      };
+      const token = state.token;
+      if (token) {
+        return {
+          ...state,
+          rememberUser: true,
+        };
+      } else {
+        return {
+          ...state,
+          rememberUser: action.payload || false,
+        };
+      }
     },
   },
   extraReducers: (builder) => {
@@ -88,6 +95,7 @@ export const authSlice = createSlice({
           id: user.id,
           token: action.payload,
           loginStatus: "Fulfilled",
+          userLoaded: true,
         };
       } else return state;
     });

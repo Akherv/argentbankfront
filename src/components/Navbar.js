@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import logo from "../assets/argentBankLogo.png";
 import styled from "styled-components";
 import { logoutUser } from "../slices/authSlice";
-import { getInfoUser } from "../slices/infoSlice";
+import { getInfoUser, logoutInfoUser } from "../slices/infoSlice";
 
 function NavBar() {
   //Initialize the useDispatch hook for updating the store(auth & info state)
@@ -29,7 +29,13 @@ function NavBar() {
       </NavLogoLink>
       <div>
         {auth.id ? (
-          <NavItemLink to="/" onClick={() => dispatch(logoutUser(null))}>
+          <NavItemLink
+            to="/"
+            onClick={() => {
+              dispatch(logoutUser(null));
+              dispatch(logoutInfoUser(null));
+            }}
+          >
             <span>
               <i className="fa fa-user-circle"></i>
               {info.firstName}&nbsp;

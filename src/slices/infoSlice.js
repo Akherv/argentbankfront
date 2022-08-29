@@ -8,7 +8,7 @@ const initialState = {
   lastName: "",
   getInfoStatus: "",
   getInfoError: "",
-  getupdateStatus: "",
+  getUpdateStatus: "",
   getUpdateError: "",
 };
 
@@ -70,6 +70,20 @@ export const updateInfoUser = createAsyncThunk(
 export const infoSlice = createSlice({
   name: "info",
   initialState,
+  reducers: {
+    logoutInfoUser(state) {
+      return {
+        ...state,
+        id: "",
+        firstName: "",
+        lastName: "",
+        getInfoStatus: "",
+        getInfoError: "",
+        getUpdateStatus: "",
+        getUpdateError: "",
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getInfoUser.pending, (state) => {
       return { ...state, getInfoStatus: "pending" };
@@ -117,5 +131,7 @@ export const infoSlice = createSlice({
     });
   },
 });
+
+export const { logoutInfoUser } = infoSlice.actions;
 
 export default infoSlice.reducer;
